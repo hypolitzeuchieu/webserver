@@ -16,6 +16,18 @@ class ClientThread(threading.Thread):
         print(data)
 
         # response of server
+
+        # read html content
+        with open('index.html', 'rb') as file:
+            html_content = file.read()
+
+        # send HTTP head
+        response_header = 'HTTP/1.1 200 OK\nContent-Type: text/html\n\n'
+        connexion.sendall(response_header.encode("UTF-8"))
+
+        # send html content
+        connexion.sendall(html_content)
+
         response = "\n\n HTTP/1.1 200 OK \nthis is the message of server"
         response = response.encode("utf-8")
         connexion.sendall(response)
